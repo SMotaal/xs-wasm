@@ -1,0 +1,441 @@
+▶︎ xsnap-examples-helloworld (snapshot)
+
+  ▷ [./before.js -w snapshots/xsnap-examples-helloworld-before.xsm]
+    
+  Summary:
+    Time: 40.032ms
+    Status: returned successfully
+    
+  ▷ [-r snapshots/xsnap-examples-helloworld-before.xsm ./after.js]
+    
+    Hello, world - xsnap
+    
+  Summary:
+    Time: 8.002ms
+    Status: returned successfully
+    
+▶︎ xsnap-examples-metering (limit)
+
+  ▷ [./test.js -l 10000]
+    
+    0
+    ⋯
+    9999
+    
+  Summary:
+    Time: 268.149ms
+    Status: returned successfully
+    
+▶︎ xsnap-examples-metering (limit interval)
+
+  ▷ [./test.js -l 10000 -i 1000]
+    
+    0
+    ⋯
+    9999
+    
+  Summary:
+    Time: 145.43ms
+    Status: returned successfully
+    
+▶︎ xsnap-examples-metering-built-ins (print)
+
+  ▷ [./test.js -q]
+    
+    [76] 0 0
+    ⋯
+    [4036] 99 0.775228164054094
+    [4059] sort
+    [12235] reverse
+    [18366] 0 0
+    ⋯
+    [21138] 99 0.990284084803557
+    
+  Summary:
+    Time: 26.959ms
+    Status: returned successfully
+    
+▶︎ xsnap-examples-generators (snapshot)
+
+  ▷ [./before.js -w snapshots/xsnap-examples-generators-before.xsm]
+    
+  Summary:
+    Time: 24.173ms
+    Status: returned successfully
+    
+  ▷ [-r snapshots/xsnap-examples-generators-before.xsm ./after.js]
+    
+    0
+    1
+    undefined
+    1
+    2
+    3
+    
+  Summary:
+    Time: 14.595ms
+    Status: returned successfully
+    
+▶︎ xsnap-examples-weaks (snapshot)
+
+  ▷ [./before.js -w snapshots/xsnap-examples-weaks-before.xsm]
+    
+  Summary:
+    Time: 14.6ms
+    Status: returned successfully
+    
+  ▷ [-r snapshots/xsnap-examples-weaks-before.xsm ./after.js]
+    
+    /xsnap-examples/weaks/after.js:3: exception: (anonymous-549): set strong: const!
+    gc()
+    true
+    true
+    undefined
+    [object Object]
+    FinalizationRegistry: weak
+    
+  Summary:
+    Time: 9.408ms
+    Status: returned successfully
+    
+▶︎ xsnap-examples-values (snapshot)
+
+  ▷ [./before.js -w snapshots/xsnap-examples-values-before.xsm]
+    
+  Summary:
+    Time: 21.139ms
+    Status: returned successfully
+    
+  ▷ [-r snapshots/xsnap-examples-values-before.xsm ./after.js]
+    
+    [object Boolean]: false === false
+    [object Boolean]: true === true
+    [object Symbol]: Symbol() === Symbol()
+    [object Symbol]: Symbol(description) === Symbol(description)
+    [object Error]: Error: message === Error: message
+    [object Error]: EvalError: message === EvalError: message
+    [object Error]: RangeError: message === RangeError: message
+    [object Error]: ReferenceError: message === ReferenceError: message
+    [object Error]: SyntaxError: message === SyntaxError: message
+    [object Error]: TypeError: message === TypeError: message
+    [object Error]: URIError: message === URIError: message
+    [object Error]: AggregateError: message === AggregateError: message
+    [object Number]: 1 === 1
+    [object BigInt]: 1 === 1
+    [object Date]: Wed Nov 15 2023 12:37:37 GMT-0500 === Wed Nov 15 2023 12:37:37 GMT-0500
+    [object String]: string === string
+    [object RegExp]: /regexp/g === /regexp/g
+    [object Array]: 0,1,,3 === 0,1,,3
+    [object Int8Array]: 0,1,2,3 === 0,1,2,3
+    [object Uint8Array]: 0,1,2,3 === 0,1,2,3
+    [object Uint8ClampedArray]: 0,1,2,3 === 0,1,2,3
+    [object Int16Array]: 0,1,2,3 === 0,1,2,3
+    [object Uint16Array]: 0,1,2,3 === 0,1,2,3
+    [object Int32Array]: 0,1,2,3 === 0,1,2,3
+    [object Uint32Array]: 0,1,2,3 === 0,1,2,3
+    [object BigInt64Array]: 0,1,2,3 === 0,1,2,3
+    [object BigUint64Array]: 0,1,2,3 === 0,1,2,3
+    [object Float32Array]: 0,1,2,3 === 0,1,2,3
+    [object Float64Array]: 0,1,2,3 === 0,1,2,3
+    [object Map]: a,0,b,1,c,2,d,2 === a,0,b,1,c,2,d,2
+    [object Set]: 0,1,2,3 === 0,1,2,3
+    
+  Summary:
+    Time: 6.79ms
+    Status: returned successfully
+    
+▶︎ xsnap-examples-proxy (snapshot)
+
+  ▷ [./before.js -w snapshots/xsnap-examples-proxy-before.xsm]
+    
+  Summary:
+    Time: 12.174ms
+    Status: returned successfully
+    
+  ▷ [-r snapshots/xsnap-examples-proxy-before.xsm ./after.js]
+    
+    hello world
+    
+  Summary:
+    Time: 5.781ms
+    Status: returned successfully
+    
+▶︎ xsnap-examples-promises (snapshot)
+
+  ▷ [./before.js -w snapshots/xsnap-examples-promises-before.xsm]
+    
+    /xsnap-examples/promises/before.js:15: exception: throw!
+    unhandled rejection: oops
+    # exception: (host): cannot coerce undefined to object!
+    Unhandled exception oops
+    unhandled rejection: oops
+    # exception: (host): cannot coerce undefined to object!
+    Unhandled exception oops
+    
+  Summary:
+    Time: 13.919ms
+    Status: returned successfully
+    
+  ▷ [-r snapshots/xsnap-examples-promises-before.xsm ./after.js]
+    
+    wow
+    oops
+    wow
+    oops
+    resolved wow
+    
+  Summary:
+    Time: 6.042ms
+    Status: returned successfully
+    
+▶︎ xsnap-examples-modules (snapshot)
+
+  ▷ [-m ./before.js -w snapshots/xsnap-examples-modules-before.xsm]
+    
+    0
+    
+  Summary:
+    Time: 14.586ms
+    Status: returned successfully
+    
+  ▷ [-r snapshots/xsnap-examples-modules-before.xsm -m ./increment.js -w snapshots/xsnap-examples-modules-increment.xsm]
+    
+  Summary:
+    Time: 10.523ms
+    Status: returned successfully
+    
+  ▷ [-r snapshots/xsnap-examples-modules-increment.xsm -m ./after.js]
+    
+    1
+    
+  Summary:
+    Time: 5.618ms
+    Status: returned successfully
+    
+▶︎ smotaal-debug-global-this (profiling)
+
+  ▷ [-m ./global-this.js -p profiles/smotaal-debug-global-this.cpuprofile]
+    
+    AggregateError: ‹class AggregateError extends Error {}›,
+    Array: ‹class Array {}›,
+    ArrayBuffer: ‹class ArrayBuffer {}›,
+    AsyncDisposableStack: undefined,
+    Atomics: {
+      add: ‹ƒ (){[native code]}›,
+      and: ‹ƒ (){[native code]}›,
+      compareExchange: ‹ƒ (){[native code]}›,
+      exchange: ‹ƒ (){[native code]}›,
+      isLockFree: ‹ƒ (){[native code]}›,
+      load: ‹ƒ (){[native code]}›,
+      or: ‹ƒ (){[native code]}›,
+      notify: ‹ƒ (){[native code]}›,
+      store: ‹ƒ (){[native code]}›,
+      sub: ‹ƒ (){[native code]}›,
+      wait: ‹ƒ (){[native code]}›,
+      wake: ‹ƒ (){[native code]}›,
+      xor: ‹ƒ (){[native code]}›
+    },
+    BigInt: ‹class BigInt {}›,
+    BigInt64Array: ‹class BigInt64Array extends TypedArray {}›,
+    BigUint64Array: ‹class BigUint64Array extends TypedArray {}›,
+    Boolean: ‹class Boolean {}›,
+    DataView: ‹class DataView {}›,
+    Date: ‹class Date {}›,
+    DisposableStack: undefined,
+    Error: ‹class Error {}›,
+    EvalError: ‹class EvalError extends Error {}›,
+    FinalizationRegistry: ‹class FinalizationRegistry {}›,
+    Float32Array: ‹class Float32Array extends TypedArray {}›,
+    Float64Array: ‹class Float64Array extends TypedArray {}›,
+    Int16Array: ‹class Int16Array extends TypedArray {}›,
+    Int32Array: ‹class Int32Array extends TypedArray {}›,
+    Int8Array: ‹class Int8Array extends TypedArray {}›,
+    JSON: {
+      parse: ‹ƒ (){[native code]}›,
+      stringify: ‹ƒ (){[native code]}›
+    },
+    Map: ‹class Map {}›,
+    Math: {
+      abs: ‹ƒ (){[native code]}›,
+      acos: ‹ƒ (){[native code]}›,
+      acosh: ‹ƒ (){[native code]}›,
+      asin: ‹ƒ (){[native code]}›,
+      asinh: ‹ƒ (){[native code]}›,
+      atan: ‹ƒ (){[native code]}›,
+      atanh: ‹ƒ (){[native code]}›,
+      atan2: ‹ƒ (){[native code]}›,
+      cbrt: ‹ƒ (){[native code]}›,
+      ceil: ‹ƒ (){[native code]}›,
+      clz32: ‹ƒ (){[native code]}›,
+      cos: ‹ƒ (){[native code]}›,
+      cosh: ‹ƒ (){[native code]}›,
+      exp: ‹ƒ (){[native code]}›,
+      expm1: ‹ƒ (){[native code]}›,
+      floor: ‹ƒ (){[native code]}›,
+      fround: ‹ƒ (){[native code]}›,
+      hypot: ‹ƒ (){[native code]}›,
+      idiv: ‹ƒ (){[native code]}›,
+      imod: ‹ƒ (){[native code]}›,
+      imul: ‹ƒ (){[native code]}›,
+      imuldiv: ‹ƒ (){[native code]}›,
+      irandom: ‹ƒ (){[native code]}›,
+      irem: ‹ƒ (){[native code]}›,
+      log: ‹ƒ (){[native code]}›,
+      log1p: ‹ƒ (){[native code]}›,
+      log10: ‹ƒ (){[native code]}›,
+      log2: ‹ƒ (){[native code]}›,
+      max: ‹ƒ (){[native code]}›,
+      min: ‹ƒ (){[native code]}›,
+      mod: ‹ƒ (){[native code]}›,
+      pow: ‹ƒ (){[native code]}›,
+      random: ‹ƒ (){[native code]}›,
+      round: ‹ƒ (){[native code]}›,
+      sign: ‹ƒ (){[native code]}›,
+      sin: ‹ƒ (){[native code]}›,
+      sinh: ‹ƒ (){[native code]}›,
+      sqrt: ‹ƒ (){[native code]}›,
+      tan: ‹ƒ (){[native code]}›,
+      tanh: ‹ƒ (){[native code]}›,
+      trunc: ‹ƒ (){[native code]}›,
+      E: undefined,
+      LN10: undefined,
+      LN2: undefined,
+      LOG10E: undefined,
+      LOG2E: undefined,
+      PI: undefined,
+      SQRT1_2: undefined,
+      SQRT2: undefined
+    },
+    ModuleSource: ‹class ModuleSource {}›,
+    Number: ‹class Number {}›,
+    Object: ‹class Object {}›,
+    Promise: ‹class Promise {}›,
+    Proxy: ‹ƒ (){[native code]}›,
+    RangeError: ‹class RangeError extends Error {}›,
+    ReferenceError: ‹class ReferenceError extends Error {}›,
+    Reflect: {
+      apply: ‹ƒ (){[native code]}›,
+      construct: ‹ƒ (){[native code]}›,
+      defineProperty: ‹ƒ (){[native code]}›,
+      deleteProperty: ‹ƒ (){[native code]}›,
+      get: ‹ƒ (){[native code]}›,
+      getOwnPropertyDescriptor: ‹ƒ (){[native code]}›,
+      getPrototypeOf: ‹ƒ (){[native code]}›,
+      has: ‹ƒ (){[native code]}›,
+      isExtensible: ‹ƒ (){[native code]}›,
+      ownKeys: ‹ƒ (){[native code]}›,
+      preventExtensions: ‹ƒ (){[native code]}›,
+      set: ‹ƒ (){[native code]}›,
+      setPrototypeOf: ‹ƒ (){[native code]}›
+    },
+    RegExp: ‹class RegExp {}›,
+    Set: ‹class Set {}›,
+    SharedArrayBuffer: ‹class SharedArrayBuffer {}›,
+    String: ‹class String {}›,
+    SuppressedError: ‹class SuppressedError extends Error {}›,
+    Symbol: ‹class Symbol {}›,
+    SyntaxError: ‹class SyntaxError extends Error {}›,
+    TypeError: ‹class TypeError extends Error {}›,
+    TypedArray: ‹class TypedArray {}›,
+    URIError: ‹class URIError extends Error {}›,
+    Uint16Array: ‹class Uint16Array extends TypedArray {}›,
+    Uint32Array: ‹class Uint32Array extends TypedArray {}›,
+    Uint8Array: ‹class Uint8Array extends TypedArray {}›,
+    Uint8ClampedArray: ‹class Uint8ClampedArray extends TypedArray {}›,
+    WeakMap: ‹class WeakMap {}›,
+    WeakRef: ‹class WeakRef {}›,
+    WeakSet: ‹class WeakSet {}›,
+    decodeURI: ‹ƒ (){[native code]}›,
+    decodeURIComponent: ‹ƒ (){[native code]}›,
+    encodeURI: ‹ƒ (){[native code]}›,
+    encodeURIComponent: ‹ƒ (){[native code]}›,
+    escape: ‹ƒ (){[native code]}›,
+    isFinite: ‹ƒ (){[native code]}›,
+    isNaN: ‹ƒ (){[native code]}›,
+    parseFloat: ‹ƒ (){[native code]}›,
+    parseInt: ‹ƒ (){[native code]}›,
+    trace: ‹ƒ (){[native code]}›,
+    unescape: ‹ƒ (){[native code]}›,
+    Infinity: Infinity,
+    NaN: NaN,
+    undefined: undefined,
+    Compartment: ‹class Compartment {}›,
+    Function: ‹class Function {}›,
+    eval: ‹ƒ (){[native code]}›,
+    setImmediate: ‹ƒ (){[native code]}›,
+    gc: ‹ƒ (){[native code]}›,
+    print: ‹ƒ (){[native code]}›,
+    issueCommand: ‹ƒ (){[native code]}›,
+    performance: {
+      now: ‹ƒ (){[native code]}›
+    },
+    currentMeterLimit: ‹ƒ (){[native code]}›,
+    resetMeter: ‹ƒ (){[native code]}›,
+    TextDecoder: ‹class TextDecoder {}›,
+    TextEncoder: ‹class TextEncoder {}›,
+    Base64: {
+      encode: ‹ƒ (){[native code]}›,
+      decode: ‹ƒ (){[native code]}›
+    },
+    harden: ‹ƒ (){[native code]}›
+    
+    
+  Summary:
+    Time: 85.679ms
+    Status: returned successfully
+    
+▶︎ smotaal-eval
+
+  ▷ [./-e ./print("Hello World!")]
+    
+    Hello World!
+    
+  Summary:
+    Time: 3.764ms
+    Status: returned successfully
+    
+▶︎ smotaal-snapshot (snapshot)
+
+  ▷ [-m ./examples.js -w snapshots/smotaal-snapshot.xsm]
+    
+  Summary:
+    Time: 13.126ms
+    Status: returned successfully
+    
+▶︎ smotaal-snapshot (snapshot dump)
+
+  ▷ [-d snapshots/smotaal-snapshot.xsm]
+    
+    XS_M 101651
+    VERS 12
+    	14.2.0 (16)
+    SIGN 15
+    	xsnap 1
+    CREA 62
+    	initialChunkSize: 33554432
+    	incrementalChunkSize: 4194304
+    	initialHeapCount: 262144
+    	incrementalHeapCount: 131072
+    	stackCount: 4096
+    	initialKeyCount: 32000
+    	incrementalKeyCount: 8000
+    	nameModulo: 1993
+    	symbolModulo: 127
+    	parserBufferSize: 8388608
+    	parserTableModulo: 1993
+    	staticSize: 0
+    	profileID: 551
+    cannot dump snapshot ./snapshots/smotaal-snapshot.xsm: Argument list too long
+    
+    Error: EXITCODE = 1
+        at ./xsnap.js:178:19 
+    
+  Summary:
+    Time: 8.244ms
+    Status: aborted expectedly
+    
+
+Summary:
+  Instances: 14		Completed: 14		Aborted: 0
+  Commands: 22		Passing: 22		Failing: 0
+  Exceptions: 1		Expected: 1		Unexpected: 0

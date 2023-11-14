@@ -1,0 +1,12 @@
+[submodule "upstream/@agoric-labs/xsnap-pub"]
+	path = upstream/@agoric-labs/xsnap-pub
+	url = https://github.com/agoric-labs/xsnap-pub
+	branch = master
+[submodule "upstream/@Moddable-OpenSource/moddable"]
+	path = upstream/@Moddable-OpenSource/moddable
+	url = https://github.com/Moddable-OpenSource/moddable
+	branch = public
+[submodule "upstream/@emscripten-core/emsdk"]
+	path = upstream/@emscripten-core/emsdk
+	url = https://github.com/emscripten-core/emsdk
+	branch = main

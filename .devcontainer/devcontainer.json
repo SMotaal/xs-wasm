@@ -1,0 +1,42 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/cpp
+{
+  "name": "xs-wasm-dev",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "version": "latest"
+    },
+    "ghcr.io/ebaskoro/devcontainer-features/emscripten:1": {
+      "version": "latest"
+    }
+  },
+
+  // "initializeCommand": "mkdir .containers/xs-wasm-dev/libraries; mkdir .containers/xs-wasm-dev/build; mkdir .containers/xs-wasm-dev/bin;",
+
+  "mounts": [
+    "source=${localWorkspaceFolder}/.devcontainer/build,target=/workspaces/xs-wasm/build,type=bind,consistency=cached"
+  ],
+
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  // "features": {},
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "gcc -v",
+
+  // Configure tool-specific properties.
+  // "customizations": {},
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root",
+
+  // SEE: https://containers.dev/implementors/json_reference/#image-specific
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/xs-wasm,type=bind,consistency=delegated",
+  "workspaceFolder": "/workspaces/xs-wasm"
+}

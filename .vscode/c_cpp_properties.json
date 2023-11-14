@@ -1,0 +1,41 @@
+{
+    "env": {
+        "workspaceIncludePaths": [
+            "${workspaceFolder}",
+            "${workspaceFolder}/upstream/@emscripten-core/emsdk/upstream/emscripten/system/include",
+            "${workspaceFolder}/upstream/@Moddable-OpenSource/moddable/xs/includes",
+            "${workspaceFolder}/upstream/@Moddable-OpenSource/moddable/xs/sources",
+            "${workspaceFolder}/upstream/@Moddable-OpenSource/moddable/xs/platforms"
+        ]
+    },
+    "configurations": [
+        {
+            "name": "Linux",
+            "compilerPath": "/usr/local/emsdk/upstream/bin/clang",
+            "includePath": [
+                "${workspaceIncludePaths}",
+                "${env:EMSDK_DIR}/upstream/emscripten/system/include"
+            ],
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        },
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceIncludePaths}",
+                "${workspaceFolder}/upstream/@emscripten-core/emsdk/upstream/emscripten/system/include"
+            ],
+            "macFrameworkPath": [
+                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/local/opt/ccache/libexec/clang",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "macos-clang-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}

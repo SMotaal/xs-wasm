@@ -1,0 +1,28 @@
+{
+  "name": "@smotaal/xs-wasm",
+  "version": "0.0.3",
+  "type": "module",
+  "license": "Apache-2.0",
+  "authors": [
+    "SMotaal <saleh@smotaal.io>",
+    "Michael FIG <michael+github@fig.org>"
+  ],
+  "scripts": {
+    "upstream:update": "git submodule update --init && git submodule foreach -q 'git checkout $(git config -f $toplevel/.gitmodules submodule.$name.branch || echo master)';",
+    "upstream:list": "git submodule foreach -q 'echo $name: $(git config -f $toplevel/.gitmodules submodule.$name.branch || echo master)';",
+    "emsdk:update": "export EMSDK=${EMSDK_DIR:-$PWD/upstream/@emscripten-core/emsdk} && (cd $EMSDK && ./emsdk install latest && ./emsdk activate latest);",
+    "patch:save": "TREE=${TREE:-INIT_CWD#$PWD/upstream/}; STAMP=$(date +%Y-%m-%d.%H.%M.%S); PATCH=$PWD/patches/$TREE.$STAMP.patch; LINK=$PWD/patches/$TREE.patch; (cd upstream/$TREE && ([ ! -e $PATCH ] || rm -i $PATCH) && mkdir -p $(dirname $PATCH) && git diff > $PATCH; ln -sf $PATCH $LINK;);",
+    "patch:apply": "TREE=${TREE:-INIT_CWD#$PWD/upstream/}; PATCH=$PWD/patches/$TREE.patch; (cd upstream/$TREE && git apply $PATCH);",
+    "make:emscripten": "export EMSDK=${EMSDK_DIR:-$PWD/upstream/@emscripten-core/emsdk} && (mkdir -p build && cd makefiles/wasm && $EMSDK/upstream/emscripten/emmake make -j$([[ $(uname -s) = Darwin ]] && sysctl -n hw.ncpu || nproc) -f xsnap-emscripten.mk);",
+    "build": "$npm_execpath run make:emscripten",
+    "start": "node demo/xsnap.js",
+    "debug:global-this:xsnap": "MODULE=modules/debug/global-this.js; (cd demo && ([ ! -e $MODULE.xsnap.log ] || rm -f $MODULE.xsnap.log) && node xsnap.js -m $MODULE > $MODULE.xsnap.log)",
+    "debug:global-this:node": "MODULE=modules/debug/global-this.js; (cd demo && ([ ! -e $MODULE.node.log ] || rm -f $MODULE.node.log) && node --no-experimental-global-webcrypto $MODULE > $MODULE.node.log)"
+  },
+  "dependencies": {
+    "wabt": "^1.0.32"
+  },
+  "devDependencies": {
+    "@types/emscripten": "latest"
+  }
+}

@@ -1,0 +1,737 @@
+diff --git a/xsnap/sources/xsnap.c b/xsnap/sources/xsnap.c
+index 96f6bce..0b69e93 100644
+--- a/xsnap/sources/xsnap.c
++++ b/xsnap/sources/xsnap.c
+@@ -1,5 +1,9 @@
+ #include "xsnap.h"
+ 
++#include <stdarg.h>  // va_list, va_start(), va_end(), vfprintf()
++#include <stdio.h>   // fprintf(), fdopen(), fclose(), stderr
++#include <string.h>  // strlen()
++
+ #define SNAPSHOT_SIGNATURE "xsnap 1"
+ 
+ extern void fxDumpSnapshot(xsMachine* the, xsSnapshot* snapshot);
+@@ -92,247 +96,388 @@ static xsBooleanValue xsMeteringCallback(xsMachine* the, xsUnsignedValue index)
+ // 	fprintf(stderr, "%d\n", index);
+ 	return 1;
+ }
++#endif  // mxMetering
++
++#if structDump & __has_builtin(__builtin_dump_struct)
++static int __debug_printf(const char* format, ...) {
++    va_list argumentList;
++    va_start(argumentList, format);
++    int result = vfprintf(stderr, format, argumentList);
++    va_end(argumentList);
++    return result;
++}
++#define dump_struct(identifier) \
++    __builtin_dump_struct(identifier, &__debug_printf);
++#define dump_struct_with_context(identifier, context) \
++    fprintf(stderr, "\n%s\n", context);               \
++    __builtin_dump_struct(identifier, &__debug_printf);
++#else  // structDump
++#define dump_struct(identifier) ;
++#define dump_struct_with_context(identifier, context) ;
++#endif  // structDump
++
++#ifdef __wasm__
++
++#include <emscripten.h>
++#include <wasi/api.h>
++
++#include "xsnap-wasm.h"
++
++// #if wasmFDTests
++
++// #endif  // wasmFDTests
++
++/// SEE:
++/// - callbacks:
++///     - https://stackoverflow.com/a/45425578
++///     - https://stackoverflow.com/questions/65469910/emscripten-passing-callback-from-c-runtime-getfuncwrapper-runtime-is-not-def
++///     - https://gist.github.com/aknuds1/533f7b228aa46e9ee4c8
++
+ #endif
+ 
+-int main(int argc, char* argv[]) 
+-{
+-	int argi;
+-	int argd = 0;
+-	int argp = 0;
+-	int argr = 0;
+-	int argw = 0;
+-	int error = 0;
+-	int interval = 0;
+-	int option = 0;
+-	int parserBufferSize = 8192 * 1024;
+-	int profiling = 0;
+-	xsCreation _creation = {
+-		32 * 1024 * 1024,	/* initialChunkSize */
+-		4 * 1024 * 1024,	/* incrementalChunkSize */
+-		256 * 1024,			/* initialHeapCount */
+-		128 * 1024,			/* incrementalHeapCount */
+-		4096,				/* stackCount */
+-		32000, 				/* initialKeyCount */
+-		8000,				/* incrementalKeyCount */
+-		1993,				/* nameModulo */
+-		127,				/* symbolModulo */
+-		parserBufferSize,	/* parserBufferSize */
+-		1993,				/* parserTableModulo */
+-	};
+-	xsCreation* creation = &_creation;
+-	xsSnapshot snapshot = {
+-		SNAPSHOT_SIGNATURE,
+-		sizeof(SNAPSHOT_SIGNATURE) - 1,
+-		gxSnapshotCallbacks,
+-		mxSnapshotCallbackCount,
+-		xsSnapshopRead,
+-		xsSnapshopWrite,
+-		NULL,
+-		0,
+-		NULL,
+-		NULL,
+-		NULL,
+-		0,
+-		NULL,
+-	};
+-	xsMachine* machine;
+-	char path[C_PATH_MAX];
+-	char* dot;
++typedef struct xsnapArguments {
++    int argc;
++    char** argv;
++    int argd;
++    int argp;
++    int argr;
++    int argw;
++    int option;
++    int interval;
++    int profiling;
++    int meteringLimit;
++    int meteringPrint;
++} xsnapArguments;
++
++typedef struct xsnapRuntime {
++    xsSnapshot* snapshot;
++    xsCreation* creation;
++    xsMachine* machine;
++} xsnapRuntime;
++
++static xsCreation __global__xsnap_creation__;
++static xsSnapshot __global__xsnap_snapshot__;
++static xsnapRuntime* __global__xsnap_runtime__pointer__;
++
++int xsnapInitalizeCreation(xsCreation* creation) {
++    if (creation->stackCount == 0) {
++        creation->initialChunkSize = 32 * 1024 * 1024;
++        creation->incrementalChunkSize = 4 * 1024 * 1024;
++        creation->initialHeapCount = 256 * 1024;
++        creation->incrementalHeapCount = 128 * 1024;
++        creation->stackCount = 4096;
++        creation->initialKeyCount = 32000;
++        creation->incrementalKeyCount = 8000;
++        creation->nameModulo = 1993;
++        creation->symbolModulo = 127;
++        creation->parserBufferSize = 8192 * 1024;
++        creation->parserTableModulo = 1993;
++    }
++    return 0;
++}
+ 
+-	if (argc == 1) {
+-		xsPrintUsage();
+-		return 0;
+-	}
+-	for (argi = 1; argi < argc; argi++) {
+-		if (argv[argi][0] != '-')
+-			continue;
+-		if (!strcmp(argv[argi], "-d")) {
+-			argi++;
+-			if (argi < argc)
+-				argd = argi;
+-			else {
+-				xsPrintUsage();
+-				return 1;
+-			}
+-			option = 5;
+-		}
+-		else if (!strcmp(argv[argi], "-e"))
+-			option = 1;
+-		else if (!strcmp(argv[argi], "-h"))
+-			xsPrintUsage();
+-		else if (!strcmp(argv[argi], "-i")) {
+-			argi++;
+-			if (argi < argc)
+-				interval = atoi(argv[argi]);
+-			else {
+-				xsPrintUsage();
+-				return 1;
+-			}
+-		}
+-		else if (!strcmp(argv[argi], "-l")) {
+-			argi++;
+-			if (argi < argc)
+-				gxMeteringLimit = atoi(argv[argi]);
+-			else {
+-				xsPrintUsage();
+-				return 1;
+-			}
+-		}
+-		else if (!strcmp(argv[argi], "-m"))
+-			option = 2;
+-		else if (!strcmp(argv[argi], "-p")) {
+-			profiling = 1;
+-			argi++;
+-			if ((argi < argc) && (argv[argi][0] != '-'))
+-				argp = argi;
+-			else
+-				argi--;
+-		}
+-		else if (!strcmp(argv[argi], "-q"))
+-			gxMeteringPrint = 1;
+-		else if (!strcmp(argv[argi], "-r")) {
+-			argi++;
+-			if (argi < argc)
+-				argr = argi;
+-			else {
+-				xsPrintUsage();
+-				return 1;
+-			}
+-		}
+-		else if (!strcmp(argv[argi], "-s"))
+-			option = 3;
+-		else if (!strcmp(argv[argi], "-t"))
+-			option = 4;
+-		else if (!strcmp(argv[argi], "-v")) {
+-			xsVersion(path, sizeof(path));
+-			printf("XS %s\n", path);
+-		}
+-		else if (!strcmp(argv[argi], "-w")) {
+-			argi++;
+-			if (argi < argc)
+-				argw = argi;
+-			else {
+-				xsPrintUsage();
+-				return 1;
+-			}
+-		}
+-		else {
+-			xsPrintUsage();
+-			return 1;
+-		}
+-	}
+-	if (gxMeteringLimit) {
+-		if (interval == 0)
+-			interval = 1;
+-	}
+-	xsInitializeSharedCluster();
+-	if (argr) {
+-		snapshot.stream = fopen(argv[argr], "rb");
+-		if (snapshot.stream) {
+-			machine = xsReadSnapshot(&snapshot, "xsnap", NULL);
+-			fclose(snapshot.stream);
+-		}
+-		else
+-			snapshot.error = errno;
+-		if (snapshot.error) {
+-			fprintf(stderr, "cannot read snapshot %s: %s\n", argv[argr], strerror(snapshot.error));
+-			return 1;
+-		}
+-	}
+-	else {
+-		machine = xsCreateMachine(creation, "xsnap", NULL);
+-		xsBuildAgent(machine);
+-	}
+-	if (profiling)
+-		fxStartProfiling(machine);
+-	xsBeginMetering(machine, xsMeteringCallback, interval);
+-	{
+-		if (option == 5) {
+-			snapshot.stream = fopen(argv[argd], "rb");
+-			if (snapshot.stream) {
+-				fxDumpSnapshot(machine, &snapshot);
+-				fclose(snapshot.stream);
+-			}
+-			else
+-				snapshot.error = errno;
+-			if (snapshot.error) {
+-				fprintf(stderr, "cannot dump snapshot %s: %s\n", argv[argr], strerror(snapshot.error));
+-				return 1;
+-			}
+-		}
+-		else if (option == 4) {
+-			fprintf(stderr, "%p\n", machine);
+-			xsReplay(machine);
+-		}
+-		else {
+-			xsBeginHost(machine);
+-			{
+-				xsVars(1);
+-				for (argi = 1; argi < argc; argi++) {
+-					if (!strcmp(argv[argi], "-i")) {
+-						argi++;
+-						continue;
+-					}
+-					if (!strcmp(argv[argi], "-l")) {
+-						argi++;
+-						continue;
+-					}
+-					if (argv[argi][0] == '-')
+-						continue;
+-					if (argi == argp)
+-						continue;
+-					if (argi == argr)
+-						continue;
+-					if (argi == argw)
+-						continue;
+-					if (option == 1) {
+-						xsResult = xsString(argv[argi]);
+-						xsCall1(xsGlobal, xsID("eval"), xsResult);
+-					}
+-					else {	
+-						if (!c_realpath(argv[argi], path))
+-							xsURIError("file not found: %s", argv[argi]);
+-						dot = strrchr(path, '.');
+-						if (((option == 0) && dot && !c_strcmp(dot, ".mjs")) || (option == 2))
+-							xsRunModuleFile(path);
+-						else
+-							xsRunProgramFile(path);
+-					}
+-				}
+-			}
+-			xsRunLoop(machine);
+-			xsEndHost(machine);
+-			if (argw) {
+-				snapshot.stream = fopen(argv[argw], "wb");
+-				if (snapshot.stream) {
+-					xsWriteSnapshot(machine, &snapshot);
+-					fclose(snapshot.stream);
+-				}
+-				else
+-					snapshot.error = errno;
+-				if (snapshot.error) {
+-					fprintf(stderr, "cannot write snapshot %s: %s\n", argv[argw], strerror(snapshot.error));
+-				}
+-			}
+-		}
+-	}
+-	xsEndMetering(machine);
+-	if (profiling) {
+-		if (argp) {
+-			FILE* stream = fopen(argv[argp], "w");
+-			if (stream)
+-				fxStopProfiling(machine, stream);
+-			else
+-				fprintf(stderr, "cannot write profile %s: %s\n", argv[argp], strerror(errno));
+-		}
+-		else
+-			fxStopProfiling(machine, C_NULL);
+-	}
+-	if (machine->abortStatus)
+-		error = machine->abortStatus;
+-	xsDeleteMachine(machine);
+-	xsTerminateSharedCluster();
+-	return error;
++int xsnapInitalizeSnapshot(xsSnapshot* snapshot) {
++    if (snapshot->signatureLength == 0) {
++        snapshot->signature = SNAPSHOT_SIGNATURE;
++        snapshot->signatureLength = sizeof(SNAPSHOT_SIGNATURE) - 1;
++        snapshot->callbacks = gxSnapshotCallbacks;
++        snapshot->callbacksLength = mxSnapshotCallbackCount;
++        snapshot->read = xsSnapshopRead;
++        snapshot->write = xsSnapshopWrite;
++        snapshot->stream = NULL;
++        snapshot->error = 0;
++        snapshot->firstChunk = NULL;
++        snapshot->firstProjection = NULL;
++        snapshot->firstSlot = NULL;
++        snapshot->slotSize = 0;
++        snapshot->slots = NULL;
++    }
++    return 0;
++}
++
++int xsnapDumpSnapshot(xsMachine* machine, xsSnapshot* snapshot, char* path) {
++    snapshot->stream = fopen(path, "rb");
++    if (snapshot->stream) {
++        fxDumpSnapshot(machine, snapshot);
++        fclose(snapshot->stream);
++    } else {
++        snapshot->error = errno;
++    }
++    if (snapshot->error) {
++        fprintf(stderr, "cannot dump snapshot %s: %s\n", path, strerror(snapshot->error));
++        return 1;
++    }
++    return 0;
++}
++
++int xsnapPrintVersion() {
++    char buffer[256];
++    xsVersion(buffer, sizeof(buffer));
++    printf("XS %s\n", buffer);
++    return 0;
++}
++
++int xsnapPrintUsage() {
++    xsPrintUsage();
++    return 0;
++}
++
++xsMachine* xsnapCreateMachine(xsnapArguments* arguments, xsSnapshot* snapshot, xsCreation* creation) {
++    xsMachine* machine = NULL;
++
++    // dump_struct_with_context(machine, "Before xsnapCreateMachine...");
++
++    if (arguments->argr) {
++        snapshot->stream = fopen(arguments->argv[arguments->argr], "rb");
++        if (snapshot->stream) {
++            machine = xsReadSnapshot(snapshot, "xsnap", NULL);
++            fclose(snapshot->stream);
++        } else
++            snapshot->error = errno;
++        if (snapshot->error) {
++            fprintf(stderr, "cannot read snapshot %s: %s\n", arguments->argv[arguments->argr], strerror(snapshot->error));
++            return machine;
++        }
++    } else {
++        machine = xsCreateMachine(creation, "xsnap", NULL);
++        xsBuildAgent(machine);
++    }
++
++    if (arguments->profiling) fxStartProfiling(machine);
++
++    // dump_struct_with_context(machine, "After xsnapCreateMachine...");
++
++    return machine;
++}
++
++int xsnapTeardownMachine(xsnapArguments* arguments, xsMachine* machine) {
++    int error = 0;
++
++    // dump_struct_with_context(machine, "Before xsnapTeardownMachine...");
++
++    if (arguments->profiling) {
++        if (arguments->argp) {
++            FILE* stream = fopen(arguments->argv[arguments->argp], "w");
++            if (stream)
++                fxStopProfiling(machine, stream);
++            else
++                fprintf(stderr, "cannot write profile %s: %s\n", arguments->argv[arguments->argp], strerror(errno));
++        } else {
++            fxStopProfiling(machine, C_NULL);
++        }
++    }
++
++    if (machine->abortStatus) error = machine->abortStatus;
++
++    xsDeleteMachine(machine);
++
++    // dump_struct_with_context(machine, "After xsnapTeardownMachine...");
++
++    return error;
++}
++
++int xsnapRunCommand(xsnapArguments* arguments, xsMachine* machine, xsSnapshot* snapshot) {
++    int argi;
++    char path[C_PATH_MAX];
++    char* dot;
++
++    // dump_struct_with_context(machine, "Before xsnapRunCommand...");
++    xsBeginHost(machine);
++    {
++        xsVars(1);
++        for (argi = 1; argi < arguments->argc; argi++) {
++            if (!strcmp(arguments->argv[argi], "-i")) {
++                argi++;
++                continue;
++            }
++            if (!strcmp(arguments->argv[argi], "-l")) {
++                argi++;
++                continue;
++            }
++            if (arguments->argv[argi][0] == '-')
++                continue;
++            if (argi == arguments->argp)
++                continue;
++            if (argi == arguments->argr)
++                continue;
++            if (argi == arguments->argw)
++                continue;
++            if (arguments->option == 1) {
++                // dump_struct_with_context(machine, "Before Eval...");
++                xsResult = xsString(arguments->argv[argi]);
++                xsCall1(xsGlobal, xsID("eval"), xsResult);
++                // dump_struct_with_context(machine, "After Eval...");
++            } else {
++                if (!c_realpath(arguments->argv[argi], path))
++                    xsURIError("file not found: %s", arguments->argv[argi]);
++                dot = strrchr(path, '.');
++                if (((arguments->option == 0) && dot && !c_strcmp(dot, ".mjs")) || (arguments->option == 2))
++                    xsRunModuleFile(path);
++                else
++                    xsRunProgramFile(path);
++            }
++        }
++    }
++    xsRunLoop(machine);
++    // dump_struct_with_context(machine, "After RunLoop...");
++    xsEndHost(machine);
++    // dump_struct_with_context(machine, "After EndHost...");
++    if (arguments->argw) {
++        snapshot->stream = fopen(arguments->argv[arguments->argw], "wb");
++        if (snapshot->stream) {
++            xsWriteSnapshot(machine, snapshot);
++            fclose(snapshot->stream);
++        } else
++            snapshot->error = errno;
++        if (snapshot->error) {
++            fprintf(stderr, "cannot write snapshot %s: %s\n", arguments->argv[arguments->argw], strerror(snapshot->error));
++        }
++    }
++
++    // dump_struct_with_context(machine, "After xsnapRunCommand...");
++    return 0;
++}
++
++int xsnapInitializeSharedRuntime(xsnapRuntime* runtime) {
++    if (__global__xsnap_runtime__pointer__) {
++        fprintf(stderr, "cannot initialize shared runtime: already initialized\n");
++        return 1;
++    } else {
++        xsInitializeSharedCluster();
++        xsnapInitalizeCreation(runtime->creation);
++        xsnapInitalizeSnapshot(runtime->snapshot);
++        __global__xsnap_runtime__pointer__ = runtime;
++        return 0;
++    }
++}
++
++int xsnapTerminateSharedRuntime(xsnapRuntime* runtime) {
++    if (runtime == NULL) {
++        fprintf(stderr, "cannot terminate shared runtime: not initialized\n");
++        return 1;
++    } else if (__global__xsnap_runtime__pointer__ != runtime) {
++        fprintf(stderr, "cannot terminate shared runtime: not the same runtime\n");
++        return 1;
++    } else {
++        xsTerminateSharedCluster();
++        __global__xsnap_runtime__pointer__ = NULL;
++        return 0;
++    }
++}
++
++#ifdef __wasm__
++
++// wasmExport(runScript)
++
++#endif
++
++int main(int argc, char* argv[]) {
++    xsnapArguments arguments = {argc, argv, 0, 0, 0, 0, 0, 0, 0, 0, 0};
++
++    {
++        int argi;
++
++        for (argi = 1; argi < argc; argi++) {
++            if (argv[argi][0] != '-') {
++                continue;
++            } else if (!strcmp(argv[argi], "-d")) {
++                argi++;
++                if (argi < argc)
++                    arguments.argd = argi;
++                else
++                    return xsnapPrintUsage(), 1;
++                arguments.option = 5;
++            } else if (!strcmp(argv[argi], "-e")) {
++                arguments.option = 1;
++            } else if (!strcmp(argv[argi], "-h")) {
++                xsPrintUsage();
++            } else if (!strcmp(argv[argi], "-i")) {
++                argi++;
++                if (argi < argc)
++                    arguments.interval = atoi(argv[argi]);
++                else
++                    return xsnapPrintUsage(), 1;
++            } else if (!strcmp(argv[argi], "-l")) {
++                argi++;
++                if (argi < argc)
++                    arguments.meteringLimit = atoi(argv[argi]);
++                else
++                    return xsnapPrintUsage(), 1;
++            } else if (!strcmp(argv[argi], "-m")) {
++                arguments.option = 2;
++            } else if (!strcmp(argv[argi], "-p")) {
++                arguments.profiling = 1;
++                argi++;
++                if ((argi < argc) && (argv[argi][0] != '-'))
++                    arguments.argp = argi;
++                else
++                    argi--;
++            } else if (!strcmp(argv[argi], "-q")) {
++                arguments.meteringPrint = 1;
++            } else if (!strcmp(argv[argi], "-r")) {
++                argi++;
++                if (argi < argc)
++                    arguments.argr = argi;
++                else
++                    return xsnapPrintUsage(), 1;
++            } else if (!strcmp(argv[argi], "-s")) {
++                arguments.option = 3;
++            } else if (!strcmp(argv[argi], "-t")) {
++                arguments.option = 4;
++            } else if (!strcmp(argv[argi], "-v")) {
++                if (xsnapPrintVersion()) return 1;
++            } else if (!strcmp(argv[argi], "-w")) {
++                argi++;
++                if (argi < argc)
++                    arguments.argw = argi;
++                else
++                    return xsnapPrintUsage(), 1;
++            } else {
++                return xsnapPrintUsage(), 1;
++            }
++        }
++
++        if (arguments.meteringLimit)
++            if (arguments.interval == 0) arguments.interval = 1;
++    }
++
++    gxMeteringLimit = (xsUnsignedValue)arguments.meteringLimit;
++    gxMeteringPrint = (xsBooleanValue)arguments.meteringPrint;
++
++    xsnapRuntime runtime = {&__global__xsnap_snapshot__, &__global__xsnap_creation__, NULL};
++
++    if (xsnapInitializeSharedRuntime(&runtime)) {
++        fprintf(stderr, "cannot initialize shared runtime\n");
++        return 1;
++    } else {
++        int error = 0;
++
++        runtime.machine = xsnapCreateMachine(&arguments, runtime.snapshot, runtime.creation);
++
++        if (runtime.machine == NULL) {
++            error = 1;
++            fprintf(stderr, "cannot create machine\n");
++        } else {
++            xsBeginMetering(runtime.machine, xsMeteringCallback, arguments.interval);
++            if (arguments.option == 5) {
++                if (xsnapDumpSnapshot(runtime.machine, runtime.snapshot, arguments.argv[arguments.argd])) return 1;
++            } else if (arguments.option == 4) {
++                fprintf(stderr, "%p\n", runtime.machine);
++                xsReplay(runtime.machine);
++            } else {
++                if (xsnapRunCommand(&arguments, runtime.machine, runtime.snapshot)) return error = 1;
++            }
++            xsEndMetering(runtime.machine);
++            error = xsnapTeardownMachine(&arguments, runtime.machine);
++        }
++
++        if (xsnapTerminateSharedRuntime(&runtime)) {
++            error = 1;
++            fprintf(stderr, "cannot terminate shared runtime\n");
++        }
++
++        return error;
++    }
+ }
+ 
+ void xsBuildAgent(xsMachine* machine) 
+diff --git a/xsnap/sources/xsnap.h b/xsnap/sources/xsnap.h
+index 7ae4b7b..2a2479d 100644
+--- a/xsnap/sources/xsnap.h
++++ b/xsnap/sources/xsnap.h
+@@ -1,6 +1,10 @@
+ #ifndef __XSNAP__
+ #define __XSNAP__
+ 
++#ifdef __wasm__
++#include "xsnap-wasm.h"
++#endif /* __wasm__ */
++
+ #include "xs.h"
+ 
+ typedef struct xsSnapshotRecord xsSnapshot;
+diff --git a/xsnap/sources/xsnapPlatform.c b/xsnap/sources/xsnapPlatform.c
+index 417d2ec..de59f42 100644
+--- a/xsnap/sources/xsnapPlatform.c
++++ b/xsnap/sources/xsnapPlatform.c
+@@ -2,6 +2,10 @@
+ #include "xsScript.h"
+ #include "xsSnapshot.h"
+ 
++#if xsnapWASI
++#include <wasi/api.h>
++#endif // xsnapWASI
++
+ #ifndef mxReserveChunkSize
+ 	#define mxReserveChunkSize 1024 * 1024 * 1024
+ #endif
+@@ -224,6 +228,10 @@ static void adjustSpaceMeter(txMachine* the, txSize theSize)
+ 
+ void* fxAllocateChunks(txMachine* the, txSize size)
+ {
++#if __wasm__
++	adjustSpaceMeter(the, size);
++	return c_malloc(size);
++#else
+ 	txByte* base;
+ 	txByte* result;
+ 	adjustSpaceMeter(the, size);
+@@ -252,22 +260,33 @@ void* fxAllocateChunks(txMachine* the, txSize size)
+ 			result = NULL;
+ 	}
+ 	return result;
++#endif
+ }
+ 
+ void fxFreeChunks(txMachine* the, void* theChunks)
+ {
++#if __wasm__
++	c_free(theChunks);
++#else
+ #if mxWindows
+ 	VirtualFree(theChunks, 0, MEM_RELEASE);
+ #else
+ 	munmap(theChunks, mxReserveChunkSize);
+ #endif
++#endif
+ }
+ 
+ txSlot* fxAllocateSlots(txMachine* the, txSize theCount)
+ {
++#if __wasm__
++	txSize size = theCount * sizeof(txSlot);
++	adjustSpaceMeter(the, size);
++	return (txSlot*)c_malloc(size);
++#else
+ 	// fprintf(stderr, "fxAllocateSlots(%u) * %d = %ld\n", theCount, sizeof(txSlot), theCount * sizeof(txSlot));
+ 	adjustSpaceMeter(the, theCount * sizeof(txSlot));
+ 	return (txSlot*)c_malloc(theCount * sizeof(txSlot));
++#endif
+ }
+ 
+ void fxFreeSlots(txMachine* the, void* theSlots)
+diff --git a/xsnap/sources/xsnapPlatform.h b/xsnap/sources/xsnapPlatform.h
+index d87918f..600c86c 100644
+--- a/xsnap/sources/xsnapPlatform.h
++++ b/xsnap/sources/xsnapPlatform.h
+@@ -27,7 +27,15 @@
+ 		#define mxExport extern
+ 		#define mxImport extern
+ 		#define XS_FUNCTION_NORETURN __attribute__((noreturn))
+-	#else 
++	#elif defined(__wasm__)
++		#ifndef mxExport
++		#define mxExport extern
++		#endif
++		#ifndef mxImport
++		#define mxImport extern
++		#endif
++		#include "xsnap-wasm.h"
++	#else
+ 		#error unknown GNU compiler
+ 	#endif
+ #else 

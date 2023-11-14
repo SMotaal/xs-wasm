@@ -1,0 +1,393 @@
+upstream/@emscripten-core/emsdk/upstream/emscripten/emcc -gsource-map -DxsnapWASI=1 -sSUPPORT_LONGJMP=wasm -fwasm-exceptions -sVERBOSE --verbose -O3 -sNO_WASM_ASYNC_COMPILATION -sNO_WARN_ON_UNDEFINED_SYMBOLS -sALLOW_MEMORY_GROWTH=1 -sMAXIMUM_MEMORY=4GB -gsource-map -sEXPORT_ALL -sEXPORT_ES6 -sMODULARIZE -sEXPORT_NAME=xsnap -sMALLOC=emmalloc -sWASM_BIGINT -sSTRICT -sFORCE_FILESYSTEM -lnodefs.js -lmemfs.js -sENVIRONMENT=node -sEXPORTED_FUNCTIONS='[_main]' -sEXPORTED_RUNTIME_METHODS='[callMain, FS]'  build/tmp/wasm/debug/xsnap-emscripten/xsAll.o build/tmp/wasm/debug/xsnap-emscripten/xsAPI.o build/tmp/wasm/debug/xsnap-emscripten/xsArguments.o build/tmp/wasm/debug/xsnap-emscripten/xsArray.o build/tmp/wasm/debug/xsnap-emscripten/xsAtomics.o build/tmp/wasm/debug/xsnap-emscripten/xsBigInt.o build/tmp/wasm/debug/xsnap-emscripten/xsBoolean.o build/tmp/wasm/debug/xsnap-emscripten/xsCode.o build/tmp/wasm/debug/xsnap-emscripten/xsCommon.o build/tmp/wasm/debug/xsnap-emscripten/xsDataView.o build/tmp/wasm/debug/xsnap-emscripten/xsDate.o build/tmp/wasm/debug/xsnap-emscripten/xsDebug.o build/tmp/wasm/debug/xsnap-emscripten/xsDefaults.o build/tmp/wasm/debug/xsnap-emscripten/xsError.o build/tmp/wasm/debug/xsnap-emscripten/xsFunction.o build/tmp/wasm/debug/xsnap-emscripten/xsGenerator.o build/tmp/wasm/debug/xsnap-emscripten/xsGlobal.o build/tmp/wasm/debug/xsnap-emscripten/xsJSON.o build/tmp/wasm/debug/xsnap-emscripten/xsLexical.o build/tmp/wasm/debug/xsnap-emscripten/xsLockdown.o build/tmp/wasm/debug/xsnap-emscripten/xsMapSet.o build/tmp/wasm/debug/xsnap-emscripten/xsMarshall.o build/tmp/wasm/debug/xsnap-emscripten/xsMath.o build/tmp/wasm/debug/xsnap-emscripten/xsMemory.o build/tmp/wasm/debug/xsnap-emscripten/xsModule.o build/tmp/wasm/debug/xsnap-emscripten/xsNumber.o build/tmp/wasm/debug/xsnap-emscripten/xsObject.o build/tmp/wasm/debug/xsnap-emscripten/xsPlatforms.o build/tmp/wasm/debug/xsnap-emscripten/xsProfile.o build/tmp/wasm/debug/xsnap-emscripten/xsPromise.o build/tmp/wasm/debug/xsnap-emscripten/xsProperty.o build/tmp/wasm/debug/xsnap-emscripten/xsProxy.o build/tmp/wasm/debug/xsnap-emscripten/xsRegExp.o build/tmp/wasm/debug/xsnap-emscripten/xsRun.o build/tmp/wasm/debug/xsnap-emscripten/xsScope.o build/tmp/wasm/debug/xsnap-emscripten/xsScript.o build/tmp/wasm/debug/xsnap-emscripten/xsSnapshot.o build/tmp/wasm/debug/xsnap-emscripten/xsSourceMap.o build/tmp/wasm/debug/xsnap-emscripten/xsString.o build/tmp/wasm/debug/xsnap-emscripten/xsSymbol.o build/tmp/wasm/debug/xsnap-emscripten/xsSyntaxical.o build/tmp/wasm/debug/xsnap-emscripten/xsTree.o build/tmp/wasm/debug/xsnap-emscripten/xsType.o build/tmp/wasm/debug/xsnap-emscripten/xsdtoa.o build/tmp/wasm/debug/xsnap-emscripten/xsre.o build/tmp/wasm/debug/xsnap-emscripten/xsmc.o build/tmp/wasm/debug/xsnap-emscripten/xsnapPlatform.o build/tmp/wasm/debug/xsnap-emscripten/textdecoder.o build/tmp/wasm/debug/xsnap-emscripten/textencoder.o build/tmp/wasm/debug/xsnap-emscripten/modBase64.o build/tmp/wasm/debug/xsnap-emscripten/xsnap.o -o build/bin/wasm/debug/xsnap-emscripten/xsnap-emscripten.js
+
+processing system library: library_int53.js
+processing system library: library.js
+processing system library: library_sigs.js
+processing system library: library_ccall.js
+processing system library: library_addfunction.js
+processing system library: library_formatString.js
+processing system library: library_getvalue.js
+processing system library: library_math.js
+processing system library: library_path.js
+processing system library: library_strings.js
+processing system library: library_html5.js
+processing system library: library_stack_trace.js
+processing system library: library_wasi.js
+processing system library: library_makeDynCall.js
+processing system library: library_eventloop.js
+processing system library: library_promise.js
+processing system library: library_browser.js
+processing system library: library_wget.js
+processing system library: library_syscall.js
+processing system library: library_fs_shared.js
+processing system library: library_fs.js
+processing system library: library_memfs.js
+processing system library: library_tty.js
+processing system library: library_pipefs.js
+processing system library: library_sockfs.js
+processing system library: library_pthread_stub.js
+processing system library: library_nodefs.js
+adding $ExitStatus (referenced by root reference (e.g. compiled C/C++ code))
+adding $callRuntimeCallbacks (referenced by root reference (e.g. compiled C/C++ code))
+adding $getValue (referenced by root reference (e.g. compiled C/C++ code))
+adding $noExitRuntime (referenced by root reference (e.g. compiled C/C++ code))
+adding $setValue (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall__newselect (referenced by root reference (e.g. compiled C/C++ code))
+adding $SYSCALLS (referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $PATH (referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS (referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $randomFill (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $initRandomFill (referenced by $randomFill, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $PATH_FS (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $TTY (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $UTF8ArrayToString (referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $UTF8Decoder (referenced by $UTF8ArrayToString, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_stdin_getChar (referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_stdin_getChar_buffer (referenced by $FS_stdin_getChar, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $intArrayFromString (referenced by $FS_stdin_getChar, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $lengthBytesUTF8 (referenced by $intArrayFromString, referenced by $FS_stdin_getChar, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToUTF8Array (referenced by $intArrayFromString, referenced by $FS_stdin_getChar, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $MEMFS (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $mmapAlloc (referenced by $MEMFS, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $zeroMemory (referenced by $mmapAlloc, referenced by $MEMFS, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $alignMemory (referenced by $mmapAlloc, referenced by $MEMFS, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_createPreloadedFile (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $asyncLoad (referenced by $FS_createPreloadedFile, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_createDataFile (referenced by $FS_createPreloadedFile, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_handledByPreloadPlugin (referenced by $FS_createPreloadedFile, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $preloadPlugins (referenced by $FS_handledByPreloadPlugin, referenced by $FS_createPreloadedFile, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_modeStringToFlags (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_getMode (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $NODEFS (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $ERRNO_CODES (referenced by $NODEFS, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $UTF8ToString (referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $bigintToI53Checked (referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $MAX_INT53 (referenced by $bigintToI53Checked, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $MIN_INT53 (referenced by $bigintToI53Checked, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_connect (referenced by root reference (e.g. compiled C/C++ code))
+adding $getSocketFromFD (referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $SOCKFS (referenced by $getSocketFromFD, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $getSocketAddress (referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $readSockaddr (referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $Sockets (referenced by $readSockaddr, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $setErrNo (referenced by $Sockets, referenced by $readSockaddr, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $inetNtop4 (referenced by $readSockaddr, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $inetNtop6 (referenced by $readSockaddr, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $DNS (referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $inetPton4 (referenced by $DNS, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $inetPton6 (referenced by $DNS, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $jstoi_q (referenced by $inetPton6, referenced by $DNS, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_fcntl64 (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_fstat64 (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_getcwd (referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToUTF8 (referenced by __syscall_getcwd, referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_getsockopt (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_ioctl (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_lstat64 (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_newfstatat (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_openat (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_readlinkat (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_socket (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_stat64 (referenced by root reference (e.g. compiled C/C++ code))
+adding _localtime_js (referenced by root reference (e.g. compiled C/C++ code))
+adding $ydayFromDate (referenced by _localtime_js, referenced by root reference (e.g. compiled C/C++ code))
+adding $isLeapYear (referenced by $ydayFromDate, referenced by _localtime_js, referenced by root reference (e.g. compiled C/C++ code))
+adding $MONTH_DAYS_LEAP_CUMULATIVE (referenced by $ydayFromDate, referenced by _localtime_js, referenced by root reference (e.g. compiled C/C++ code))
+adding $MONTH_DAYS_REGULAR_CUMULATIVE (referenced by $ydayFromDate, referenced by _localtime_js, referenced by root reference (e.g. compiled C/C++ code))
+adding _mktime_js (referenced by root reference (e.g. compiled C/C++ code))
+adding _tzset_js (referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToNewUTF8 (referenced by _tzset_js, referenced by root reference (e.g. compiled C/C++ code))
+adding emscripten_date_now (referenced by root reference (e.g. compiled C/C++ code))
+adding emscripten_resize_heap (referenced by root reference (e.g. compiled C/C++ code))
+adding $getHeapMax (referenced by emscripten_resize_heap, referenced by root reference (e.g. compiled C/C++ code))
+adding $growMemory (referenced by emscripten_resize_heap, referenced by root reference (e.g. compiled C/C++ code))
+adding environ_get (referenced by root reference (e.g. compiled C/C++ code))
+adding $getEnvStrings (referenced by environ_get, referenced by root reference (e.g. compiled C/C++ code))
+adding $ENV (referenced by $getEnvStrings, referenced by environ_get, referenced by root reference (e.g. compiled C/C++ code))
+adding $getExecutableName (referenced by $getEnvStrings, referenced by environ_get, referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToAscii (referenced by environ_get, referenced by root reference (e.g. compiled C/C++ code))
+adding environ_sizes_get (referenced by root reference (e.g. compiled C/C++ code))
+adding fd_close (referenced by root reference (e.g. compiled C/C++ code))
+adding fd_read (referenced by root reference (e.g. compiled C/C++ code))
+adding $doReadv (referenced by fd_read, referenced by root reference (e.g. compiled C/C++ code))
+adding fd_seek (referenced by root reference (e.g. compiled C/C++ code))
+adding fd_write (referenced by root reference (e.g. compiled C/C++ code))
+adding $doWritev (referenced by fd_write, referenced by root reference (e.g. compiled C/C++ code))
+adding gethostbyname (referenced by root reference (e.g. compiled C/C++ code))
+adding $getHostByName (referenced by gethostbyname, referenced by root reference (e.g. compiled C/C++ code))
+adding strftime (referenced by root reference (e.g. compiled C/C++ code))
+adding $arraySum (referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $addDays (referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $MONTH_DAYS_LEAP (referenced by $addDays, referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $MONTH_DAYS_REGULAR (referenced by $addDays, referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $writeArrayToMemory (referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $exitJS (referenced by root reference (e.g. compiled C/C++ code))
+adding proc_exit (referenced by $exitJS, referenced by root reference (e.g. compiled C/C++ code))
+adding $keepRuntimeAlive (referenced by proc_exit, referenced by $exitJS, referenced by root reference (e.g. compiled C/C++ code))
+adding $runtimeKeepaliveCounter (referenced by $keepRuntimeAlive, referenced by proc_exit, referenced by $exitJS, referenced by root reference (e.g. compiled C/C++ code))
+adding $handleException (referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToUTF8OnStack (referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_unlink (referenced by root reference (e.g. compiled C/C++ code))
+
+upstream/@emscripten-core/emsdk/upstream/emscripten/emcc -gsource-map -DxsnapWASI=1 -sSUPPORT_LONGJMP=wasm -fwasm-exceptions -sVERBOSE --verbose -O3 -sNO_WASM_ASYNC_COMPILATION -sNO_WARN_ON_UNDEFINED_SYMBOLS -sALLOW_MEMORY_GROWTH=1 -sMAXIMUM_MEMORY=4GB -gsource-map -sEXPORT_ALL -sEXPORT_ES6 -sMODULARIZE -sEXPORT_NAME=xsnap -sMALLOC=emmalloc -sWASM_BIGINT -sSTRICT -sFORCE_FILESYSTEM -lnodefs.js -lmemfs.js -sENVIRONMENT=node -sEXPORTED_FUNCTIONS='[_main]' -sEXPORTED_RUNTIME_METHODS='[callMain, FS]'  build/tmp/wasm/debug/xsnap-emscripten/xsAll.o build/tmp/wasm/debug/xsnap-emscripten/xsAPI.o build/tmp/wasm/debug/xsnap-emscripten/xsArguments.o build/tmp/wasm/debug/xsnap-emscripten/xsArray.o build/tmp/wasm/debug/xsnap-emscripten/xsAtomics.o build/tmp/wasm/debug/xsnap-emscripten/xsBigInt.o build/tmp/wasm/debug/xsnap-emscripten/xsBoolean.o build/tmp/wasm/debug/xsnap-emscripten/xsCode.o build/tmp/wasm/debug/xsnap-emscripten/xsCommon.o build/tmp/wasm/debug/xsnap-emscripten/xsDataView.o build/tmp/wasm/debug/xsnap-emscripten/xsDate.o build/tmp/wasm/debug/xsnap-emscripten/xsDebug.o build/tmp/wasm/debug/xsnap-emscripten/xsDefaults.o build/tmp/wasm/debug/xsnap-emscripten/xsError.o build/tmp/wasm/debug/xsnap-emscripten/xsFunction.o build/tmp/wasm/debug/xsnap-emscripten/xsGenerator.o build/tmp/wasm/debug/xsnap-emscripten/xsGlobal.o build/tmp/wasm/debug/xsnap-emscripten/xsJSON.o build/tmp/wasm/debug/xsnap-emscripten/xsLexical.o build/tmp/wasm/debug/xsnap-emscripten/xsLockdown.o build/tmp/wasm/debug/xsnap-emscripten/xsMapSet.o build/tmp/wasm/debug/xsnap-emscripten/xsMarshall.o build/tmp/wasm/debug/xsnap-emscripten/xsMath.o build/tmp/wasm/debug/xsnap-emscripten/xsMemory.o build/tmp/wasm/debug/xsnap-emscripten/xsModule.o build/tmp/wasm/debug/xsnap-emscripten/xsNumber.o build/tmp/wasm/debug/xsnap-emscripten/xsObject.o build/tmp/wasm/debug/xsnap-emscripten/xsPlatforms.o build/tmp/wasm/debug/xsnap-emscripten/xsProfile.o build/tmp/wasm/debug/xsnap-emscripten/xsPromise.o build/tmp/wasm/debug/xsnap-emscripten/xsProperty.o build/tmp/wasm/debug/xsnap-emscripten/xsProxy.o build/tmp/wasm/debug/xsnap-emscripten/xsRegExp.o build/tmp/wasm/debug/xsnap-emscripten/xsRun.o build/tmp/wasm/debug/xsnap-emscripten/xsScope.o build/tmp/wasm/debug/xsnap-emscripten/xsScript.o build/tmp/wasm/debug/xsnap-emscripten/xsSnapshot.o build/tmp/wasm/debug/xsnap-emscripten/xsSourceMap.o build/tmp/wasm/debug/xsnap-emscripten/xsString.o build/tmp/wasm/debug/xsnap-emscripten/xsSymbol.o build/tmp/wasm/debug/xsnap-emscripten/xsSyntaxical.o build/tmp/wasm/debug/xsnap-emscripten/xsTree.o build/tmp/wasm/debug/xsnap-emscripten/xsType.o build/tmp/wasm/debug/xsnap-emscripten/xsdtoa.o build/tmp/wasm/debug/xsnap-emscripten/xsre.o build/tmp/wasm/debug/xsnap-emscripten/xsmc.o build/tmp/wasm/debug/xsnap-emscripten/xsnapPlatform.o build/tmp/wasm/debug/xsnap-emscripten/textdecoder.o build/tmp/wasm/debug/xsnap-emscripten/textencoder.o build/tmp/wasm/debug/xsnap-emscripten/modBase64.o build/tmp/wasm/debug/xsnap-emscripten/xsnap.o -o build/bin/wasm/debug/xsnap-emscripten/xsnap-emscripten.js
+
+processing system library: library_int53.js
+processing system library: library.js
+processing system library: library_sigs.js
+processing system library: library_ccall.js
+processing system library: library_addfunction.js
+processing system library: library_formatString.js
+processing system library: library_getvalue.js
+processing system library: library_math.js
+processing system library: library_path.js
+processing system library: library_strings.js
+processing system library: library_html5.js
+processing system library: library_stack_trace.js
+processing system library: library_wasi.js
+processing system library: library_makeDynCall.js
+processing system library: library_eventloop.js
+processing system library: library_promise.js
+processing system library: library_browser.js
+processing system library: library_wget.js
+processing system library: library_syscall.js
+processing system library: library_fs_shared.js
+processing system library: library_fs.js
+processing system library: library_memfs.js
+processing system library: library_tty.js
+processing system library: library_pipefs.js
+processing system library: library_sockfs.js
+processing system library: library_pthread_stub.js
+processing system library: library_nodefs.js
+adding $ExitStatus (referenced by root reference (e.g. compiled C/C++ code))
+adding $callRuntimeCallbacks (referenced by root reference (e.g. compiled C/C++ code))
+adding $getValue (referenced by root reference (e.g. compiled C/C++ code))
+adding $noExitRuntime (referenced by root reference (e.g. compiled C/C++ code))
+adding $setValue (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall__newselect (referenced by root reference (e.g. compiled C/C++ code))
+adding $SYSCALLS (referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $PATH (referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS (referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $randomFill (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $initRandomFill (referenced by $randomFill, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $PATH_FS (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $TTY (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $UTF8ArrayToString (referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $UTF8Decoder (referenced by $UTF8ArrayToString, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_stdin_getChar (referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_stdin_getChar_buffer (referenced by $FS_stdin_getChar, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $intArrayFromString (referenced by $FS_stdin_getChar, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $lengthBytesUTF8 (referenced by $intArrayFromString, referenced by $FS_stdin_getChar, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToUTF8Array (referenced by $intArrayFromString, referenced by $FS_stdin_getChar, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $MEMFS (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $mmapAlloc (referenced by $MEMFS, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $zeroMemory (referenced by $mmapAlloc, referenced by $MEMFS, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $alignMemory (referenced by $mmapAlloc, referenced by $MEMFS, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_createPreloadedFile (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $asyncLoad (referenced by $FS_createPreloadedFile, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_createDataFile (referenced by $FS_createPreloadedFile, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_handledByPreloadPlugin (referenced by $FS_createPreloadedFile, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $preloadPlugins (referenced by $FS_handledByPreloadPlugin, referenced by $FS_createPreloadedFile, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_modeStringToFlags (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_getMode (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $NODEFS (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $ERRNO_CODES (referenced by $NODEFS, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $UTF8ToString (referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $bigintToI53Checked (referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $MAX_INT53 (referenced by $bigintToI53Checked, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $MIN_INT53 (referenced by $bigintToI53Checked, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_connect (referenced by root reference (e.g. compiled C/C++ code))
+adding $getSocketFromFD (referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $SOCKFS (referenced by $getSocketFromFD, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $getSocketAddress (referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $readSockaddr (referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $Sockets (referenced by $readSockaddr, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $setErrNo (referenced by $Sockets, referenced by $readSockaddr, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $inetNtop4 (referenced by $readSockaddr, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $inetNtop6 (referenced by $readSockaddr, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $DNS (referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $inetPton4 (referenced by $DNS, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $inetPton6 (referenced by $DNS, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $jstoi_q (referenced by $inetPton6, referenced by $DNS, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_fcntl64 (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_fstat64 (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_getcwd (referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToUTF8 (referenced by __syscall_getcwd, referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_getsockopt (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_ioctl (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_lstat64 (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_newfstatat (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_openat (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_readlinkat (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_socket (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_stat64 (referenced by root reference (e.g. compiled C/C++ code))
+adding _localtime_js (referenced by root reference (e.g. compiled C/C++ code))
+adding $ydayFromDate (referenced by _localtime_js, referenced by root reference (e.g. compiled C/C++ code))
+adding $isLeapYear (referenced by $ydayFromDate, referenced by _localtime_js, referenced by root reference (e.g. compiled C/C++ code))
+adding $MONTH_DAYS_LEAP_CUMULATIVE (referenced by $ydayFromDate, referenced by _localtime_js, referenced by root reference (e.g. compiled C/C++ code))
+adding $MONTH_DAYS_REGULAR_CUMULATIVE (referenced by $ydayFromDate, referenced by _localtime_js, referenced by root reference (e.g. compiled C/C++ code))
+adding _mktime_js (referenced by root reference (e.g. compiled C/C++ code))
+adding _tzset_js (referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToNewUTF8 (referenced by _tzset_js, referenced by root reference (e.g. compiled C/C++ code))
+adding emscripten_date_now (referenced by root reference (e.g. compiled C/C++ code))
+adding emscripten_resize_heap (referenced by root reference (e.g. compiled C/C++ code))
+adding $getHeapMax (referenced by emscripten_resize_heap, referenced by root reference (e.g. compiled C/C++ code))
+adding $growMemory (referenced by emscripten_resize_heap, referenced by root reference (e.g. compiled C/C++ code))
+adding environ_get (referenced by root reference (e.g. compiled C/C++ code))
+adding $getEnvStrings (referenced by environ_get, referenced by root reference (e.g. compiled C/C++ code))
+adding $ENV (referenced by $getEnvStrings, referenced by environ_get, referenced by root reference (e.g. compiled C/C++ code))
+adding $getExecutableName (referenced by $getEnvStrings, referenced by environ_get, referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToAscii (referenced by environ_get, referenced by root reference (e.g. compiled C/C++ code))
+adding environ_sizes_get (referenced by root reference (e.g. compiled C/C++ code))
+adding fd_close (referenced by root reference (e.g. compiled C/C++ code))
+adding fd_read (referenced by root reference (e.g. compiled C/C++ code))
+adding $doReadv (referenced by fd_read, referenced by root reference (e.g. compiled C/C++ code))
+adding fd_seek (referenced by root reference (e.g. compiled C/C++ code))
+adding fd_write (referenced by root reference (e.g. compiled C/C++ code))
+adding $doWritev (referenced by fd_write, referenced by root reference (e.g. compiled C/C++ code))
+adding gethostbyname (referenced by root reference (e.g. compiled C/C++ code))
+adding $getHostByName (referenced by gethostbyname, referenced by root reference (e.g. compiled C/C++ code))
+adding strftime (referenced by root reference (e.g. compiled C/C++ code))
+adding $arraySum (referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $addDays (referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $MONTH_DAYS_LEAP (referenced by $addDays, referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $MONTH_DAYS_REGULAR (referenced by $addDays, referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $writeArrayToMemory (referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $exitJS (referenced by root reference (e.g. compiled C/C++ code))
+adding proc_exit (referenced by $exitJS, referenced by root reference (e.g. compiled C/C++ code))
+adding $keepRuntimeAlive (referenced by proc_exit, referenced by $exitJS, referenced by root reference (e.g. compiled C/C++ code))
+adding $runtimeKeepaliveCounter (referenced by $keepRuntimeAlive, referenced by proc_exit, referenced by $exitJS, referenced by root reference (e.g. compiled C/C++ code))
+adding $handleException (referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToUTF8OnStack (referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_unlink (referenced by root reference (e.g. compiled C/C++ code))
+
+upstream/@emscripten-core/emsdk/upstream/emscripten/emcc -gsource-map -DxsnapWASI=1 -sSUPPORT_LONGJMP=wasm -fwasm-exceptions -sVERBOSE --verbose -O3 -sNO_WASM_ASYNC_COMPILATION -sNO_WARN_ON_UNDEFINED_SYMBOLS -sALLOW_MEMORY_GROWTH=1 -sMAXIMUM_MEMORY=4GB -gsource-map -sEXPORT_ALL -sEXPORT_ES6 -sMODULARIZE -sEXPORT_NAME=xsnap -sMALLOC=emmalloc -sWASM_BIGINT -sSTRICT -sFORCE_FILESYSTEM -lnodefs.js -lmemfs.js -sENVIRONMENT=node -sEXPORTED_FUNCTIONS='[_main]' -sEXPORTED_RUNTIME_METHODS='[callMain, FS]'  build/tmp/wasm/debug/xsnap-emscripten/xsAll.o build/tmp/wasm/debug/xsnap-emscripten/xsAPI.o build/tmp/wasm/debug/xsnap-emscripten/xsArguments.o build/tmp/wasm/debug/xsnap-emscripten/xsArray.o build/tmp/wasm/debug/xsnap-emscripten/xsAtomics.o build/tmp/wasm/debug/xsnap-emscripten/xsBigInt.o build/tmp/wasm/debug/xsnap-emscripten/xsBoolean.o build/tmp/wasm/debug/xsnap-emscripten/xsCode.o build/tmp/wasm/debug/xsnap-emscripten/xsCommon.o build/tmp/wasm/debug/xsnap-emscripten/xsDataView.o build/tmp/wasm/debug/xsnap-emscripten/xsDate.o build/tmp/wasm/debug/xsnap-emscripten/xsDebug.o build/tmp/wasm/debug/xsnap-emscripten/xsDefaults.o build/tmp/wasm/debug/xsnap-emscripten/xsError.o build/tmp/wasm/debug/xsnap-emscripten/xsFunction.o build/tmp/wasm/debug/xsnap-emscripten/xsGenerator.o build/tmp/wasm/debug/xsnap-emscripten/xsGlobal.o build/tmp/wasm/debug/xsnap-emscripten/xsJSON.o build/tmp/wasm/debug/xsnap-emscripten/xsLexical.o build/tmp/wasm/debug/xsnap-emscripten/xsLockdown.o build/tmp/wasm/debug/xsnap-emscripten/xsMapSet.o build/tmp/wasm/debug/xsnap-emscripten/xsMarshall.o build/tmp/wasm/debug/xsnap-emscripten/xsMath.o build/tmp/wasm/debug/xsnap-emscripten/xsMemory.o build/tmp/wasm/debug/xsnap-emscripten/xsModule.o build/tmp/wasm/debug/xsnap-emscripten/xsNumber.o build/tmp/wasm/debug/xsnap-emscripten/xsObject.o build/tmp/wasm/debug/xsnap-emscripten/xsPlatforms.o build/tmp/wasm/debug/xsnap-emscripten/xsProfile.o build/tmp/wasm/debug/xsnap-emscripten/xsPromise.o build/tmp/wasm/debug/xsnap-emscripten/xsProperty.o build/tmp/wasm/debug/xsnap-emscripten/xsProxy.o build/tmp/wasm/debug/xsnap-emscripten/xsRegExp.o build/tmp/wasm/debug/xsnap-emscripten/xsRun.o build/tmp/wasm/debug/xsnap-emscripten/xsScope.o build/tmp/wasm/debug/xsnap-emscripten/xsScript.o build/tmp/wasm/debug/xsnap-emscripten/xsSnapshot.o build/tmp/wasm/debug/xsnap-emscripten/xsSourceMap.o build/tmp/wasm/debug/xsnap-emscripten/xsString.o build/tmp/wasm/debug/xsnap-emscripten/xsSymbol.o build/tmp/wasm/debug/xsnap-emscripten/xsSyntaxical.o build/tmp/wasm/debug/xsnap-emscripten/xsTree.o build/tmp/wasm/debug/xsnap-emscripten/xsType.o build/tmp/wasm/debug/xsnap-emscripten/xsdtoa.o build/tmp/wasm/debug/xsnap-emscripten/xsre.o build/tmp/wasm/debug/xsnap-emscripten/xsmc.o build/tmp/wasm/debug/xsnap-emscripten/xsnapPlatform.o build/tmp/wasm/debug/xsnap-emscripten/textdecoder.o build/tmp/wasm/debug/xsnap-emscripten/textencoder.o build/tmp/wasm/debug/xsnap-emscripten/modBase64.o build/tmp/wasm/debug/xsnap-emscripten/xsnap.o -o build/bin/wasm/debug/xsnap-emscripten/xsnap-emscripten.js
+
+processing system library: library_int53.js
+processing system library: library.js
+processing system library: library_sigs.js
+processing system library: library_ccall.js
+processing system library: library_addfunction.js
+processing system library: library_formatString.js
+processing system library: library_getvalue.js
+processing system library: library_math.js
+processing system library: library_path.js
+processing system library: library_strings.js
+processing system library: library_html5.js
+processing system library: library_stack_trace.js
+processing system library: library_wasi.js
+processing system library: library_makeDynCall.js
+processing system library: library_eventloop.js
+processing system library: library_promise.js
+processing system library: library_browser.js
+processing system library: library_wget.js
+processing system library: library_syscall.js
+processing system library: library_fs_shared.js
+processing system library: library_fs.js
+processing system library: library_memfs.js
+processing system library: library_tty.js
+processing system library: library_pipefs.js
+processing system library: library_sockfs.js
+processing system library: library_pthread_stub.js
+processing system library: library_nodefs.js
+adding $ExitStatus (referenced by root reference (e.g. compiled C/C++ code))
+adding $callRuntimeCallbacks (referenced by root reference (e.g. compiled C/C++ code))
+adding $getValue (referenced by root reference (e.g. compiled C/C++ code))
+adding $noExitRuntime (referenced by root reference (e.g. compiled C/C++ code))
+adding $setValue (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall__newselect (referenced by root reference (e.g. compiled C/C++ code))
+adding $SYSCALLS (referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $PATH (referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS (referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $randomFill (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $initRandomFill (referenced by $randomFill, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $PATH_FS (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $TTY (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $UTF8ArrayToString (referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $UTF8Decoder (referenced by $UTF8ArrayToString, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_stdin_getChar (referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_stdin_getChar_buffer (referenced by $FS_stdin_getChar, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $intArrayFromString (referenced by $FS_stdin_getChar, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $lengthBytesUTF8 (referenced by $intArrayFromString, referenced by $FS_stdin_getChar, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToUTF8Array (referenced by $intArrayFromString, referenced by $FS_stdin_getChar, referenced by $TTY, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $MEMFS (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $mmapAlloc (referenced by $MEMFS, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $zeroMemory (referenced by $mmapAlloc, referenced by $MEMFS, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $alignMemory (referenced by $mmapAlloc, referenced by $MEMFS, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_createPreloadedFile (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $asyncLoad (referenced by $FS_createPreloadedFile, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_createDataFile (referenced by $FS_createPreloadedFile, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_handledByPreloadPlugin (referenced by $FS_createPreloadedFile, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $preloadPlugins (referenced by $FS_handledByPreloadPlugin, referenced by $FS_createPreloadedFile, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_modeStringToFlags (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_getMode (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $NODEFS (referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $ERRNO_CODES (referenced by $NODEFS, referenced by $FS, referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $UTF8ToString (referenced by $SYSCALLS, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $bigintToI53Checked (referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $MAX_INT53 (referenced by $bigintToI53Checked, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding $MIN_INT53 (referenced by $bigintToI53Checked, referenced by __syscall__newselect, referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_connect (referenced by root reference (e.g. compiled C/C++ code))
+adding $getSocketFromFD (referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $SOCKFS (referenced by $getSocketFromFD, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $getSocketAddress (referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $readSockaddr (referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $Sockets (referenced by $readSockaddr, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $setErrNo (referenced by $Sockets, referenced by $readSockaddr, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $inetNtop4 (referenced by $readSockaddr, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $inetNtop6 (referenced by $readSockaddr, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $DNS (referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $inetPton4 (referenced by $DNS, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $inetPton6 (referenced by $DNS, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding $jstoi_q (referenced by $inetPton6, referenced by $DNS, referenced by $getSocketAddress, referenced by __syscall_connect, referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_fcntl64 (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_fstat64 (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_getcwd (referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToUTF8 (referenced by __syscall_getcwd, referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_getsockopt (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_ioctl (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_lstat64 (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_newfstatat (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_openat (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_readlinkat (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_socket (referenced by root reference (e.g. compiled C/C++ code))
+adding __syscall_stat64 (referenced by root reference (e.g. compiled C/C++ code))
+adding _localtime_js (referenced by root reference (e.g. compiled C/C++ code))
+adding $ydayFromDate (referenced by _localtime_js, referenced by root reference (e.g. compiled C/C++ code))
+adding $isLeapYear (referenced by $ydayFromDate, referenced by _localtime_js, referenced by root reference (e.g. compiled C/C++ code))
+adding $MONTH_DAYS_LEAP_CUMULATIVE (referenced by $ydayFromDate, referenced by _localtime_js, referenced by root reference (e.g. compiled C/C++ code))
+adding $MONTH_DAYS_REGULAR_CUMULATIVE (referenced by $ydayFromDate, referenced by _localtime_js, referenced by root reference (e.g. compiled C/C++ code))
+adding _mktime_js (referenced by root reference (e.g. compiled C/C++ code))
+adding _tzset_js (referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToNewUTF8 (referenced by _tzset_js, referenced by root reference (e.g. compiled C/C++ code))
+adding emscripten_date_now (referenced by root reference (e.g. compiled C/C++ code))
+adding emscripten_resize_heap (referenced by root reference (e.g. compiled C/C++ code))
+adding $getHeapMax (referenced by emscripten_resize_heap, referenced by root reference (e.g. compiled C/C++ code))
+adding $growMemory (referenced by emscripten_resize_heap, referenced by root reference (e.g. compiled C/C++ code))
+adding environ_get (referenced by root reference (e.g. compiled C/C++ code))
+adding $getEnvStrings (referenced by environ_get, referenced by root reference (e.g. compiled C/C++ code))
+adding $ENV (referenced by $getEnvStrings, referenced by environ_get, referenced by root reference (e.g. compiled C/C++ code))
+adding $getExecutableName (referenced by $getEnvStrings, referenced by environ_get, referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToAscii (referenced by environ_get, referenced by root reference (e.g. compiled C/C++ code))
+adding environ_sizes_get (referenced by root reference (e.g. compiled C/C++ code))
+adding fd_close (referenced by root reference (e.g. compiled C/C++ code))
+adding fd_read (referenced by root reference (e.g. compiled C/C++ code))
+adding $doReadv (referenced by fd_read, referenced by root reference (e.g. compiled C/C++ code))
+adding fd_seek (referenced by root reference (e.g. compiled C/C++ code))
+adding fd_write (referenced by root reference (e.g. compiled C/C++ code))
+adding $doWritev (referenced by fd_write, referenced by root reference (e.g. compiled C/C++ code))
+adding gethostbyname (referenced by root reference (e.g. compiled C/C++ code))
+adding $getHostByName (referenced by gethostbyname, referenced by root reference (e.g. compiled C/C++ code))
+adding strftime (referenced by root reference (e.g. compiled C/C++ code))
+adding $arraySum (referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $addDays (referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $MONTH_DAYS_LEAP (referenced by $addDays, referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $MONTH_DAYS_REGULAR (referenced by $addDays, referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $writeArrayToMemory (referenced by strftime, referenced by root reference (e.g. compiled C/C++ code))
+adding $exitJS (referenced by root reference (e.g. compiled C/C++ code))
+adding proc_exit (referenced by $exitJS, referenced by root reference (e.g. compiled C/C++ code))
+adding $keepRuntimeAlive (referenced by proc_exit, referenced by $exitJS, referenced by root reference (e.g. compiled C/C++ code))
+adding $runtimeKeepaliveCounter (referenced by $keepRuntimeAlive, referenced by proc_exit, referenced by $exitJS, referenced by root reference (e.g. compiled C/C++ code))
+adding $handleException (referenced by root reference (e.g. compiled C/C++ code))
+adding $stringToUTF8OnStack (referenced by root reference (e.g. compiled C/C++ code))
+adding $FS_unlink (referenced by root reference (e.g. compiled C/C++ code))
+
