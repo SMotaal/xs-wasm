@@ -4,14 +4,23 @@ This demo includes the `wasm` module and a simple wrapper that runs in Node.js `
 
 > **Note**: Does not work on Windows, but it likely would in WSL!
 
-To run the included examples:
+## Getting Started
 
-- Execute `yarn start` or `npm start` inside this package.
-- Execute `node ‹path/to/›xsnap.js` from anywhere.
+The demo can be started by running `npm start` within the repository, or `node ‹path/to/repo›/demo/xsnap.js` from anywhere.
 
-To run something else:
+### Modes
 
-- Execute `node ‹path/to/›xsnap.js` followed by any of the supported flags.
+- By default, the demo will run various examples including ones found in the original `xsnap` repository.
+
+  Some examples will save snapshots and profiles in respectively-named subfolders. The standard output will also be captured and a sanitized log will be saved in its respectively-named subfolder at the end.
+
+  > **Note**: For convenience during development, the snapshots and profiles subfolders get deleted at the start of each execution, while the date-prefixed log is simply overwritten.
+
+- Alternatively, the demo replicates the native `xsnap` behaviour and can be used with modules, scripts, or string evaluation:
+
+  > **Note**: The demo uses a sandboxed `NodeFS` interface limiting access to modules and scripts that live directly inside the `demo` folder.
+
+### Arguments
 
 There wrapper supports the following command-line arguments similar to the native `xsnap` build:
 
@@ -37,33 +46,3 @@ When no arguments are passed the wrapper does the following:
 - Sequentially executes many of the examples.
 - Saves some snapshots and profiles in their respectively-named subfolders.
 - Saves a moderately sanitized log in its respectively-named subfolder.
-
-> **Note**: For convenience during development, the snapshots and profiles subfolders get deleted at the start of each execution, while the date-prefixed log is simply overwritten.
-
-Some high-level insights based on my review of the Moddable codebase:
-
-- It seems that both `xsanp` and `xst` stray far from `xs`'s primary use cases.
-- Typically, `xs` is used along with the Moddable SDK to construct precompiled binaries from `JS` and `C` code while targetting specific devices.
-- Incidentally, with `xsnap` and `xst` as edge cases, the `xs` platform itself is embedded as a conforming runtime with just-in-time loading, parsing and execution.
-
-Some high-level insights based on my own experience with WebAssembly:
-
-- It seems reasonable that the immediate goal would not be to target `WASI` environments.
-- As of today, few `JS` environments support `WASI`, including Node.js, which leverages its synchronous `io` façade.
-- At best, `WASI` provides a stable enough interface that `emscripten` and other toolchains are slowly converging at.
-- It seems more reasonable to want to limit the reliance on `syscalls` and defer to the `JS`-side (ie `host`).
-
-Some high-level insights based on my own experience with `xsnap` thus far my inclination on what would follow:
-
-- Directly wire `xsbug-node` with the `host` and make it portable.
-- Devise portable abstractions to consistently profile performance and memory usage for the `wasm` instances.
-- Temporarily use `MEMFS` to gauge how well the `wasm` ports to the browser.
-- Repurpose `test262` to track regressions or discrepancies between `wasm` and `native`.
-- Limit the reliance on `emscripten` features and tooling while deferring to the `JS`-side.
-- Finalize the `.devcontainer` and concise `README` instructions then determine where it is best to push the code.
-
-Some aspiring goals:
-
-- Use `xsnap` as a simulated runtime compartment or realm with a well-defined behaviour.
-- Allow `xsnap` to wire to host capabilities including `WebAssembly`.
-- Use `xsnap`'s wrappers to instead interact with the `host`'s literals inside `wasm`.

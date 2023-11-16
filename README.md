@@ -4,7 +4,7 @@ Proof-of-concept port of Moddable's `xs` engine to WebAssembly using `emscripten
 
 **Attributions**: Special thanks to [@michaelfig] for helping with brainstorming through the experimental effort, and as well with [@kriskowal] for their mentorship. Thanks to folks at Moddable and Agoric for open-sourcing their work.
 
-> **Note**: Issues are disabled on this repository due to limit bandwidth to be able to assist specifically in this capacity.
+> **Note**: Issues are disabled on this repository due to my limited bandwidth to be able to assist specifically in this capacity. See [profile](https://github.com/smotaal) if you'd like to reach out otherwise.
 
 ## Getting Started
 
@@ -12,9 +12,9 @@ This repository serves as a starting point for the work that is necessary to por
 
 ### Demo
 
-The `xsnap.js` demo can be started with `yarn start` without any build steps.
+The `xsnap.js` demo can be started with `npm start` without any build steps.
 
-***See***: [`demo/README`]
+***See***: [`demo/README.md`]
 
 ### Building
 
@@ -44,7 +44,7 @@ Updating and patching for [@Moddable-OpenSource/moddable] is a lot more straight
 
 ***See***: [`patches/@Moddable-OpenSource`]
 
-In both cases, first make sure that the respective submodule in the [`upstream`] folder is up-to-date with the specific remote branch or commit, then use `git apply` to apply the patch. Finally, verify that the updates and patches are working as expected by running `yarn build` and `yarn start`.
+In both cases, first make sure that the respective submodule in the [`upstream`] folder is up-to-date with the specific remote branch or commit, then use `git apply` to apply the patch. Finally, verify that the updates and patches are working as expected by running `npm build` and `npm start`.
 
 ***See***: [`package.json`] scripts `upstream:update` and `patch:apply`.
 
@@ -86,7 +86,7 @@ In both cases, first make sure that the respective submodule in the [`upstream`]
 [@agoric-labs/xsnap-pub]: https://github.com/agoric-labs/xsnap-pub
 [@emscripten-core/emsdk]: https://github.com/emscripten-core/emsdk
 [`xsnap-emscripten.mk`]: makefiles/wasm/xsnap-emscripten.mk
-[`demo/README`]: demo/README
+[`demo/README.md`]: demo/README.md
 [`sources`]: sources/
 [`upstream`]: upstream/
 [`patches/@agoric-labs`]: patches/@agoric-labs
